@@ -1,5 +1,5 @@
 runtime: nodejs12
-service: frontend
+service: frontend1
 instance_class: F4_1G
 handlers:
   - url: /
