@@ -1,0 +1,49 @@
+name: Deployment service
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - "**/*.md"
+      - "**/*.gitignore"
+      - "**/*.gitattributes"
+      - "**/translations.yaml"
+  workflow_dispatch:
+    branches:
+      - master
+    paths-ignore:
+      - "**/*.md"
+      - "**/*.gitignore"
+      - "**/*.gitattributes"
+
+env:
+  NODE_VERSION: 12.x
+  CI: true
+  GCP_APPLICATION: frontendtodoapp
+  GCP_IMG_PROJECT: ingka-pd-crse-dev
+jobs:
+  development:
+    name: Deploy to development
+    environment:
+      name: development
+    runs-on: ubuntu-latest
+    env:
+      NODE_VERSION: 12.x
+      CI: true
+      GCP_PROJECT: ingka-pd-crse-dev
+
+    steps:
+      # Setup gcloud CLI
+      - uses: actions/checkout@v1
+      - uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCP_DEPLOY_CREDENTIALS }}
+          export_default_credentials: true
+          
+      - name: Deploy
+        run: |
+          gcloud config set project ${{ env.GCP_PROJECT }}
+
+      - name: Deploy
+        run: |
+          gcloud app deploy app.standard.yaml --quiet
