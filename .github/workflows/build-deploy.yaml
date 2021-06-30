@@ -47,7 +47,7 @@ jobs:
       
       - name: Move Build folder
         run: |
-          mv -R build ./deploy/build
+          mv build ./deploy/build
           
       - name: Deploy
         run: |
