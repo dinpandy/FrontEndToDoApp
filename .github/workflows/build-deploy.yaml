@@ -39,6 +39,14 @@ jobs:
         with:
           service_account_key: ${{ secrets.GCP_DEPLOY_CREDENTIALS }}
           export_default_credentials: true
+
+      - name: npm Build
+        run: |
+          npm run build
+      
+      - name: Move Build folder
+        run: |
+          mv -R build ./deploy/build
           
       - name: Deploy
         run: |
