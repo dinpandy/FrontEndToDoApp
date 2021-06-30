@@ -45,7 +45,7 @@ jobs:
           npm install
           npm run build
       
-      - name: Move Build folder
+      - name: Move Build folder to Deployment folder
         run: |
           mv build ./deploy/build
           
